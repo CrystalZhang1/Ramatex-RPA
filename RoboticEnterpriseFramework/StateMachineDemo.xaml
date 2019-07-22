@@ -198,9 +198,9 @@
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
           <Transition.To>
-            <State x:Name="__ReferenceID0" sap2010:Annotation.AnnotationText="Get next tracnsaction input data" DisplayName="Get Transaction Data" sap:VirtualizedContainerService.HintSize="265.333333333333,90" sap2010:WorkflowViewState.IdRef="State_2">
+            <State x:Name="__ReferenceID0" sap2010:Annotation.AnnotationText="Get next tracnsaction input data" DisplayName="Get Transaction Data" sap:VirtualizedContainerService.HintSize="590.666666666667,971.333333333333" sap2010:WorkflowViewState.IdRef="State_2">
               <State.Entry>
-                <Sequence DisplayName="Retrieve Data" sap:VirtualizedContainerService.HintSize="518,368" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                <Sequence DisplayName="Retrieve Data" sap:VirtualizedContainerService.HintSize="548,596.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_3">
                   <Sequence.Variables>
                     <Variable x:TypeArguments="x:Boolean" Name="ShouldStop" />
                   </Sequence.Variables>
@@ -209,8 +209,27 @@
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <ui:ShouldStop DisplayName="Check Stop Signal" sap:VirtualizedContainerService.HintSize="480,22" sap2010:WorkflowViewState.IdRef="ShouldStop_1" Result="[ShouldStop]" />
-                  <If Condition="[ShouldStop]" DisplayName="Should Stop or Get next" sap:VirtualizedContainerService.HintSize="480,214" sap2010:WorkflowViewState.IdRef="If_2" />
+                  <ui:ShouldStop DisplayName="Check Stop Signal" sap:VirtualizedContainerService.HintSize="510,22" sap2010:WorkflowViewState.IdRef="ShouldStop_1" Result="[ShouldStop]" />
+                  <If Condition="[ShouldStop]" DisplayName="Should Stop or Get next" sap:VirtualizedContainerService.HintSize="510,442.666666666667" sap2010:WorkflowViewState.IdRef="If_2">
+                    <If.Then>
+                      <Sequence DisplayName="Orchestrator stop requested" sap:VirtualizedContainerService.HintSize="368,288.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:LogMessage DisplayName="Log Stop Message" sap:VirtualizedContainerService.HintSize="330,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Stop Process Requested.&quot;]" />
+                        <Assign sap:VirtualizedContainerService.HintSize="330,62" sap2010:WorkflowViewState.IdRef="Assign_3">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="ui:QueueItem">[TransactionItem]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="ui:QueueItem">[Nothing]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                      </Sequence>
+                    </If.Then>
+                  </If>
                 </Sequence>
               </State.Entry>
               <sap:WorkflowViewStateService.ViewState>
@@ -223,6 +242,9 @@
                   <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
+              <State.Variables>
+                <Variable x:TypeArguments="ui:QueueItem" Name="TransactionItem" />
+              </State.Variables>
             </State>
           </Transition.To>
           <Transition.Action>
